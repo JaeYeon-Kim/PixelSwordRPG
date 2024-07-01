@@ -36,11 +36,11 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         // 플레이어 이동 입력
         float x = Input.GetAxis("Horizontal");
 
         PlayerController.Move(x);
-
         // 플레이어 점프 입력   
         if (Input.GetKeyDown(KeyCode.Space))
         {
