@@ -22,6 +22,11 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void FixedUpdate() {
+        // 빔을쏜다(Debug: 게임 창 상에서 보이지 않음) 매개변수: 빔 시작위치, 빔의 방향, 빔의 색
+        Debug.DrawRay(rigid2D.position, Vector3.down, new Color(0, 1, 0));
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -46,5 +51,6 @@ public class PlayerController : MonoBehaviour
     public void Jump() {
         // JumpForce 만큼 위쪽으로 속력을 설정 
         rigid2D.velocity = Vector2.up * jumpForce;
+        animator.SetBool("isJumping", true);
     }
 }
