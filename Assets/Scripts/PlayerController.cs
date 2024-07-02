@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigid2D;
 
     Animator animator; // 애니메이터 조작을 위한 변수 
+    SpriteRenderer spriteRenderer;
 
     [SerializeField] private float moveSpeed = 3.0f;    // 기본 이동 속도 
     [SerializeField] private float jumpForce = 5.0f;    // 점프 힘
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
         rigid2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     // Start is called before the first frame update
     void Start()
@@ -158,4 +160,34 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    // 플레이어 충돌 이벤트 
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if(collision.gameObject.tag == "Enemy") {
+            Debug.Log("플레이어가 맞았습니다.");
+            OnDamaged(collision.transform.position);
+        }
+    }
+
+    // 적으로부터 데미지를 입었을 경우 무적 처리 
+    void OnDamaged(Vector2 targetPosition) {
+        // playerDamaged 번호로 
+        gameObject.layer = 9;
+
+        // 맞았을 경우 플레이어의 색을 변경 해줌(살짝 반투명)
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f); 
+        
+        // Reaction Force(피격 당할 경우 튕겨져 나가는 힘 구현)
+        int direction = transform.position.x - targetPosition.x > 0 ? 1 : -1;
+        rigid2D.AddForce(new Vector2(direction, 1) * 2, ForceMode2D.Impulse);
+
+        Invoke("OffDamaged", 2);
+    }
+
+    // 무적 처리를 해제 
+    private void OffDamaged() {
+        gameObject.layer = 8;
+        spriteRenderer.color = new Color(1, 1, 1, 1);
+    }
+
 }

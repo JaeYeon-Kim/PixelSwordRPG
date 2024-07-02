@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 969401138}
   - component: {fileID: 969401137}
   - component: {fileID: 969401140}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -454,7 +454,7 @@ Transform:
   m_GameObject: {fileID: 969401136}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.92, y: 0.7, z: 0}
+  m_LocalPosition: {x: 0.277, y: 0.378, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -648,8 +648,16 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: -2253911629886400664, guid: 183f9454760fe4acbbc92f2e5d0718af, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -2253911629886400664, guid: 183f9454760fe4acbbc92f2e5d0718af, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2253911629886400664, guid: 183f9454760fe4acbbc92f2e5d0718af, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1160356261127867848, guid: 183f9454760fe4acbbc92f2e5d0718af, type: 3}
       propertyPath: m_Controller
@@ -790,9 +798,9 @@ GameObject:
   - component: {fileID: 1967585201}
   - component: {fileID: 1967585200}
   - component: {fileID: 1967585202}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Snail
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -858,7 +866,7 @@ Transform:
   m_GameObject: {fileID: 1967585196}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.757, y: 0.28, z: 0}
+  m_LocalPosition: {x: 0.757, y: 0.265, z: -1}
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -969,7 +977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70f72cff85f7439abfcb354c55d8d21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
+  hp: 20
   moveSpeed: 0.5
   nextMove: 0
 --- !u!1 &2116868833
@@ -981,7 +989,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2116868834}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
