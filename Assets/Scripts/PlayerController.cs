@@ -11,14 +11,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 3.0f;    // 기본 이동 속도 
     [SerializeField] private float jumpForce = 5.0f;    // 점프 힘
 
-    [SerializeField]
-    private LayerMask groundLayer; // 바닥 체크를 위한 충돌 레이어
+    [SerializeField] private LayerMask groundLayer; // 바닥 체크를 위한 충돌 레이어
     private BoxCollider2D boxCollider2D;    // 오브젝트의 충돌 범위 컴포넌트 
     private bool isGrounded;        // 바닥 체크 변수 
     private Vector3 footPosition; // 발의 위치 
 
-    [SerializeField]
-    private int maxJumpCount = 2; // 땅을 밟기 전까지 할 수 있는 최대 점프 횟수 
+    [SerializeField] private int maxJumpCount = 2; // 땅을 밟기 전까지 할 수 있는 최대 점프 횟수 
     private int currentJumpCount = 0;   // 현재 가능한 점프 횟수 
 
     // 무기 공격 감지를 위한 속성들 
@@ -155,6 +153,8 @@ public class PlayerController : MonoBehaviour
             // Collider에 걸린 녀석이 적개체 일경우 
             if(collider.tag == "Enemy") {
                 collider.GetComponent<Enemy>().TakeDamage(attackDamage);
+            } else {
+                return;
             }
         }
     }
