@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private LayerMask groundLayer; // 바닥 체크를 위한 충돌 레이어
-    private CapsuleCollider2D capsuleCollider2D;    // 오브젝트의 충돌 범위 컴포넌트 
+    private BoxCollider2D boxCollider2D;    // 오브젝트의 충돌 범위 컴포넌트 
     private bool isGrounded;        // 바닥 체크 변수 
     private Vector3 footPosition; // 발의 위치 
 
@@ -21,18 +21,25 @@ public class PlayerController : MonoBehaviour
     private int maxJumpCount = 2; // 땅을 밟기 전까지 할 수 있는 최대 점프 횟수 
     private int currentJumpCount = 0;   // 현재 가능한 점프 횟수 
 
+    // 무기 공격 감지를 위한 속성들 
+    [SerializeField] private Transform pos;
+    [SerializeField] private Vector2 boxSize;
+
+    // 플레이어 무기 데미지 지정 
+    private int attackDamage;
+
 
 
     private void Awake()
     {
         rigid2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        capsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
     }
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     private void FixedUpdate()
@@ -65,7 +72,7 @@ public class PlayerController : MonoBehaviour
         //
 
         // 플레이어 오브젝트의 Collider 2D min, center, max 위치 정보
-        Bounds bounds = capsuleCollider2D.bounds;
+        Bounds bounds = boxCollider2D.bounds;
 
         // 플레이어의 발 위치 설정 
         footPosition = new Vector2(bounds.center.x, bounds.min.y);
@@ -89,6 +96,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
+    }
+
+    // OverlapBox는 보이지 않기 때문에 그림으로 그려줌
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(pos.position, boxSize);
     }
 
     // 플레이어의 이동 처리 
@@ -121,5 +134,28 @@ public class PlayerController : MonoBehaviour
             currentJumpCount--;
         }
 
+    }
+
+
+    // 플레이어의 공격 처리 
+    public void Attack() {
+        // 공격 데미지 설정 
+        attackDamage = Random.Range(1, 5);
+
+        // 공격 애니메이션 처리 
+        animator.SetTrigger("isAttack");
+
+
+        // 공격 범위에 걸린 Collider들을 가져옴
+        Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
+        // 이중 Enemy 값만 골라줌 
+        foreach (Collider2D collider in collider2Ds)
+        {
+            // Debug.Log(collider);
+            // Collider에 걸린 녀석이 적개체 일경우 
+            if(collider.tag == "Enemy") {
+                collider.GetComponent<Enemy>().TakeDamage(attackDamage);
+            }
+        }
     }
 }

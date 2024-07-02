@@ -9,6 +9,8 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour
 {
     private PlayerController PlayerController;
+    private float curTime;
+    [SerializeField] private float coolTime = 0.5f;
 
 
     private bool facingDirection = true;    // 캐릭터의 방향 전환을 위한 bool 값
@@ -56,6 +58,21 @@ public class PlayerInput : MonoBehaviour
         else if (x < 0 && facingDirection)
         {
             Flip();
+        }
+
+
+
+        if (curTime <= 0)
+        {
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                curTime = coolTime;
+                PlayerController.Attack();
+            }
+        }
+        else
+        {
+            curTime -= Time.deltaTime;
         }
     }
 
