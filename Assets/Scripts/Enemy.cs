@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
         isDamaged = true;
         rigid2D.velocity = Vector2.zero;
         int knockbackDirection = playerPosition > transform.position.x ? -1: 1;
-        rigid2D.AddForce(new Vector2(1 * knockbackDirection, 1), ForceMode2D.Impulse);
+        rigid2D.AddForce(new Vector2(1 * knockbackDirection, 0), ForceMode2D.Impulse);
         hp -= damage;
         Debug.Log("몬스터의 현재 체력: " + hp);
         if (hp <= 0)
