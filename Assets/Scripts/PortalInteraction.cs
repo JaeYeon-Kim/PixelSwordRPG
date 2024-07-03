@@ -17,7 +17,11 @@ public class PortalInteraction : MonoBehaviour
     [SerializeField] Vector2 newMinCameraBoundary;
     [SerializeField] Vector2 newMaxCameraBoundary;
     // 플레이어가 새로운 맵으로 이동된 후 위치 조절 
-    
+    [SerializeField] Vector2 playerPosOffset;
+    // 다음 포탈 위치 변수 
+    [SerializeField] Transform exitPos;
+
+
 
     private void Awake() {
         mainCameraController = Camera.main.GetComponent<MainCameraController>();
@@ -36,6 +40,10 @@ public class PortalInteraction : MonoBehaviour
         if (isPortalTriggered && Input.GetKeyDown(KeyCode.UpArrow))
         {
             Debug.Log("포탈 작동!!");
+            mainCameraController.minCameraBoundary = newMinCameraBoundary;
+            mainCameraController.maxCameraBoundary = newMaxCameraBoundary;
+
+            mainCameraController.player.position = exitPos.position + (Vector3)playerPosOffset;
         }
     }
 
