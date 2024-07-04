@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int hp;        // 몬스터의 체력 
     [SerializeField] private float moveSpeed; // 몬스터의 스피드
 
-    private float knockbackForce = 5f;  // 플레이어로 부터 피격당했을때 몬스터가 밀려나는 힘 
+    private float knockbackForce = 1f;  // 플레이어로 부터 피격당했을때 몬스터가 밀려나는 힘 
 
     // 행동 지표를 결정할 변수 
     public int nextMove;
@@ -74,7 +74,7 @@ public class Enemy : MonoBehaviour
         isDamaged = true;
         rigid2D.velocity = Vector2.zero;
         int knockbackDirection = playerPosition > transform.position.x ? -1: 1;
-        rigid2D.AddForce(new Vector2(1 * knockbackDirection, 0), ForceMode2D.Impulse);
+        rigid2D.AddForce(new Vector2(1 * knockbackDirection, 0.5f), ForceMode2D.Impulse);
         hp -= damage;
         Debug.Log("몬스터의 현재 체력: " + hp);
         if (hp <= 0)
