@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Enemy : MonoBehaviour
 {
 
@@ -9,6 +11,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private int hp;        // 몬스터의 체력 
     [SerializeField] private float moveSpeed; // 몬스터의 스피드
 
+
+    // 타격 이펙트 
+    [SerializeField] private GameObject hitEffect;      // 효과 프리팹
+
+    [SerializeField] private AudioClip hitSound;     // 효과 재생음 
     private float knockbackForce = 1f;  // 플레이어로 부터 피격당했을때 몬스터가 밀려나는 힘 
 
     // 행동 지표를 결정할 변수 
@@ -24,6 +31,7 @@ public class Enemy : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     BoxCollider2D boxCollider2D;
+    AudioSource audioSource;
 
     private void Awake()
     {
@@ -31,6 +39,10 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
+        audioSource = GetComponent<AudioSource>();
+        if(audioSource == null) {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
         Invoke("Think", 5);
     }
     // Start is called before the first frame update
@@ -48,9 +60,9 @@ public class Enemy : MonoBehaviour
     void FixedUpdate()
     {
         // 데미지를 입고 있지 않을때만 이동 시킴 
-        if(!isDamaged)
-        // 몬스터 이동 로직 : x축은 좌측 방향 * 속도, y축은 현재 속력 그대로 
-        rigid2D.velocity = new Vector2(nextMove * moveSpeed, rigid2D.velocity.y);
+        if (!isDamaged)
+            // 몬스터 이동 로직 : x축은 좌측 방향 * 속도, y축은 현재 속력 그대로 
+            rigid2D.velocity = new Vector2(nextMove * moveSpeed, rigid2D.velocity.y);
 
         // 지형 체크 
 
@@ -73,15 +85,26 @@ public class Enemy : MonoBehaviour
     {
         isDamaged = true;
         rigid2D.velocity = Vector2.zero;
-        int knockbackDirection = playerPosition > transform.position.x ? -1: 1;
-        rigid2D.AddForce(new Vector2(1 * knockbackDirection, 0.5f), ForceMode2D.Impulse);
+        int knockbackDirection = playerPosition > transform.position.x ? -1 : 1;
+        rigid2D.AddForce(new Vector2(0, 0.5f), ForceMode2D.Impulse);
         hp -= damage;
+        GameObject cloneHitEffect = Instantiate(hitEffect, new Vector2(transform.position.x, transform.position.y + 0.1f), Quaternion.identity);
+        animator.SetTrigger("isHit");
+        if(hitSound != null) {
+            audioSource.PlayOneShot(hitSound);
+        }
+        StartCoroutine(HitEffectDelay(cloneHitEffect)); // 타격 이펙트 생성 및 재생 
+
         Debug.Log("몬스터의 현재 체력: " + hp);
         if (hp <= 0)
         {
+            rigid2D.velocity = Vector2.zero;        // 체력이 다닳으면 몬스터의 움직임을 멈춤 
+            if(cloneHitEffect != null) {            // 효과 이펙트가 남아있을경우 삭제 
+                Destroy(cloneHitEffect);
+            }
             Debug.Log("몬스터 사망");
-            boxCollider2D.enabled = false;
-            StartCoroutine(DelayedDie(5f));
+            animator.SetTrigger("isDie");           // 사망 애니메이션 실행 
+            StartCoroutine(DelayedDie(1f));         // 프리팹 삭제 
         }
     }
 
@@ -120,23 +143,27 @@ public class Enemy : MonoBehaviour
     }
 
     // 몬스터의 충돌 체크 
-    private void OnCollisionEnter2D(Collision2D collider) {
+    private void OnCollisionEnter2D(Collision2D collider)
+    {
         // 몬스터가 바닥에 닿아있을 경우 isDamaged = false;
-        if(collider.gameObject.tag == "Platform") {
+        if (collider.gameObject.tag == "Platform")
+        {
             isDamaged = false;
         }
     }
-    
-    // 몬스터 사망 로직 
-    public void Die() {
-        Debug.Log("몬스터 오브젝트 삭제!!");
+
+
+    // 몬스터 죽음 딜레이용 
+    IEnumerator DelayedDie(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         Destroy(gameObject);
     }
 
-
-    // 몬스터 죽음을 위한 코루틴 
-    IEnumerator DelayedDie(float delay) {
-        yield return new WaitForSeconds(delay);
-        Die();
+    // 몬스터 hitEffect Delay용
+    IEnumerator HitEffectDelay(GameObject hitEffect)
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(hitEffect);
     }
 }

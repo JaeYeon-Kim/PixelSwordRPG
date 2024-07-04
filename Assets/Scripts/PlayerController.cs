@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     Animator animator; // 애니메이터 조작을 위한 변수 
     SpriteRenderer spriteRenderer;
 
+    AudioSource audioSource;
+
+
     [SerializeField] private float moveSpeed = 3.0f;    // 기본 이동 속도 
     [SerializeField] private float jumpForce = 5.0f;    // 점프 힘
 
@@ -24,6 +27,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform pos;
     [SerializeField] private Vector2 boxSize;
 
+
+    // 플레이어 무기 사운드 
+    [SerializeField] private AudioClip hitSound;
+
     // 플레이어 무기 데미지 지정 
     private int attackDamage;
 
@@ -35,6 +42,10 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
+        if(audioSource == null) {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -92,12 +103,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     // OverlapBox는 보이지 않기 때문에 그림으로 그려줌
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;
@@ -141,6 +146,9 @@ public class PlayerController : MonoBehaviour
     public void Attack() {
         // 공격 데미지 설정 
         attackDamage = Random.Range(1, 5);
+
+        // 공격 효과음 재생
+        audioSource.PlayOneShot(hitSound);
 
         // 공격 애니메이션 처리 
         animator.SetTrigger("isAttack");
