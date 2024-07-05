@@ -4,6 +4,9 @@ using UnityEngine;
 
 
 
+/*
+몬스터 기본 로직 
+*/
 public class Enemy : MonoBehaviour
 {
 
@@ -21,7 +24,10 @@ public class Enemy : MonoBehaviour
     // 행동 지표를 결정할 변수 
     public int nextMove;
 
-    bool isDamaged;
+    bool isDamaged;     // 데미지를 입었는지 
+
+    bool isChasing = false; // 추격중인지 ㅇ부 
+
 
 
     Rigidbody2D rigid2D;
@@ -81,11 +87,11 @@ public class Enemy : MonoBehaviour
     }
 
     // 데미지를 입는 메소드 
-    public void TakeDamage(int damage, float playerPosition)
+    public void TakeDamage(int damage, Vector3 playerPosition)
     {
         isDamaged = true;
         rigid2D.velocity = Vector2.zero;
-        int knockbackDirection = playerPosition > transform.position.x ? -1 : 1;
+        int knockbackDirection = playerPosition.x > transform.position.x ? -1 : 1;
         rigid2D.AddForce(new Vector2(0, 0.5f), ForceMode2D.Impulse);
         hp -= damage;
         GameObject cloneHitEffect = Instantiate(hitEffect, new Vector2(transform.position.x, transform.position.y + 0.1f), Quaternion.identity);
@@ -144,6 +150,7 @@ public class Enemy : MonoBehaviour
         CancelInvoke();
         Invoke("Think", 5);
     }
+    
 
     // 몬스터의 충돌 체크 
     private void OnCollisionEnter2D(Collision2D collider)
