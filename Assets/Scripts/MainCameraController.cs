@@ -21,7 +21,7 @@ public class MainCameraController : MonoBehaviour
 
     public void CameraPositionUpdate()
     {
-        Debug.Log("플레이어 위치 확인" + player.position.x + "   " + player.position.y);
+        // Debug.Log("플레이어 위치 확인" + player.position.x + "   " + player.position.y);
         
         Vector3 targetPosition = new Vector3(player.position.x, player.position.y, this.transform.position.z);
 

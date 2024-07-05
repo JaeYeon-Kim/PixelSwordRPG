@@ -9,15 +9,41 @@ using UnityEngine;
 */
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
+    public PlayerData playerData;
+
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        
+        // 초기 유저 정보 할당
+        playerData = new PlayerData(1, 100, 100, 10, 5);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        SoundManager.instance.PlaySound(0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    // 경험치를 획득하는 메서드 
+    public void GainExperience(int amount) {
+        playerData.GetExp(amount);
     }
 }

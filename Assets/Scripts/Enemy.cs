@@ -105,6 +105,9 @@ public class Enemy : MonoBehaviour
             Debug.Log("몬스터 사망");
             animator.SetTrigger("isDie");           // 사망 애니메이션 실행 
             StartCoroutine(DelayedDie(1f));         // 프리팹 삭제 
+
+            // 경험치 획득 - 테스트용
+            GameManager.instance.GainExperience(10);
         }
     }
 
