@@ -60,10 +60,7 @@ public class UIManager : MonoBehaviour
         this.maxExp = maxExp;
         playerExp.value = currentExp / maxExp;
 
-        if(playerExp.value >= 1) {
-            Debug.Log("여기 타니??정말로");
-            UpdatePlayerLevel(playerLevel);
-        }
+        UpdatePlayerLevel(playerLevel);
     }
 
     // 유저의 레벨 관리 
@@ -71,17 +68,4 @@ public class UIManager : MonoBehaviour
         // 레벨 업데이트 
         playerLevelText.text = "Lv " + playerLevel;
     }
-
-
-    // // 유저의 체력바 관리 
-    // public void DetectPlayerHp()
-    // {
-    //     playerHp.value = (float)currentHp / (float)maxHp;
-    // }
-
-    // // 유저의 경험치바 관리
-    // public void DetectPlayerExp()
-    // {
-    //     playerExp.value = (float)currentExp / (float)maxExp;
-    // }
 }
