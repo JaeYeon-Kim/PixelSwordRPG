@@ -36,6 +36,4 @@ public class SoundManager : MonoBehaviour
         audioSource.loop = true;
         audioSource.Play();
     }
-
-  
 }
