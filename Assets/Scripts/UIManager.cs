@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
 
+    public static UIManager instance;
+
     // 플레이어의 정보 관련 UI 담당 
     [SerializeField] private Slider playerHp;
     [SerializeField] private Slider playerExp;
@@ -18,6 +20,18 @@ public class UIManager : MonoBehaviour
 
     private float currentExp = 0;
     private float maxExp = 100;
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
 
     // Start is called before the first frame update
@@ -29,34 +43,35 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // 테스트를 위해 T키 입력시 유저의 체력 10씩 감소
-        if(Input.GetKeyDown(KeyCode.T)) {
-            currentHp -= 10;
-        }
-
-        // 테스트를 위해 Y키 입력시 유저의 경험치 10씩 증가 
-        if(Input.GetKeyDown(KeyCode.Y)) {
-            currentExp += 10;
-        }
-
-        DetectPlayerHp();
-        DetectPlayerExp();
     }
 
-
-    // 유저의 체력바 관리 
-    void DetectPlayerHp()
-    {
-        playerHp.value = (float)currentHp / (float) maxHp;
+    // 유저의 체력 관리 
+    public void UpdatePlayerHp() {
+        
     }
 
     // 유저의 경험치바 관리
-    void DetectPlayerExp() {
-        playerExp.value = (float) currentExp / (float) maxExp;
-
-        // 경험치가 max와 currentExp가 같아질때 레벨업 처리
-        if(currentExp >= maxExp) {
-            Debug.Log("레벨업이라구!!");
-        }
+    public void UpdatePlayerExp(float currentExp, float maxExp) {
+        this.currentExp = currentExp;
+        this.maxExp = maxExp;
+        playerExp.value = currentExp / maxExp;
     }
+
+    // 유저의 레벨 관리 
+    public void UpdatePlayerLevel() {
+
+    }
+
+
+    // // 유저의 체력바 관리 
+    // public void DetectPlayerHp()
+    // {
+    //     playerHp.value = (float)currentHp / (float)maxHp;
+    // }
+
+    // // 유저의 경험치바 관리
+    // public void DetectPlayerExp()
+    // {
+    //     playerExp.value = (float)currentExp / (float)maxExp;
+    // }
 }

@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 
 
@@ -15,6 +17,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float moveSpeed; // 몬스터의 스피드
 
 
+    // 몬스터를 따라다니는 체력바 지정
+    [SerializeField] private GameObject monsterHpBar;
+    [SerializeField] private GameObject canvas;
+
+    RectTransform hpBar;
+
+
     // 타격 이펙트 
     [SerializeField] private GameObject hitEffect;      // 효과 프리팹
 
@@ -24,11 +33,7 @@ public class Enemy : MonoBehaviour
     // 행동 지표를 결정할 변수 
     public int nextMove;
 
-    bool isDamaged;     // 데미지를 입었는지 
-
-    bool isChasing = false; // 추격중인지 ㅇ부 
-
-
+    bool isDamaged;     // 데미지를 입었는지
 
     Rigidbody2D rigid2D;
 
@@ -54,13 +59,16 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        // 몬스터 생성시 몬스터 상단에 체력바 붙이기
+        hpBar = Instantiate(monsterHpBar, canvas.transform).GetComponent<RectTransform>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        // 체력바 붙이기 
+        Vector3 _hpBarPos = Camera.main.WorldToScreenPoint(new Vector3(transform.position.x, transform.position.y + 0.2f, 0));
+        hpBar.position = _hpBarPos;
     }
 
     void FixedUpdate()
@@ -167,7 +175,8 @@ public class Enemy : MonoBehaviour
     IEnumerator DelayedDie(float delay)
     {
         yield return new WaitForSeconds(delay);
-        Destroy(gameObject);
+        Destroy(gameObject);    // 몬스터 제거 
+        Destroy(hpBar.gameObject); // hpBar제거
     }
 
     // 몬스터 hitEffect Delay용

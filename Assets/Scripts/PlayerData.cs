@@ -2,37 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// public class PlayerData : MonoBehaviour
-// {
-//     // Start is called before the first frame update
-//     void Start()
-//     {
-        
-//     }
-
-//     // Update is called once per frame
-//     void Update()
-//     {
-        
-//     }
-// }
+/*
+플레이어 데이터를 관리하는 구조체 
+*/
 
 public struct PlayerData {
     public int level;
     public int maxHealth;
     public int currentHealth;
     public int attackPower;
-    public int exp;
+    public float exp;
+
+    public float maxExp;
 
 
 
     // 생성자
-    public PlayerData(int initialLevel, int initialMaxHealth, int initialCurrentHealth, int initialAttackPower, int initialExp) {
+    public PlayerData(int initialLevel, int initialMaxHealth, int initialCurrentHealth, int initialAttackPower, 
+    float currentExp, float finalExp) {
         level = initialLevel;
         maxHealth = initialMaxHealth;
         currentHealth = initialCurrentHealth;
         attackPower = initialAttackPower;
-        exp = initialExp;
+        exp = currentExp;
+        maxExp = finalExp;
     }
 
 
@@ -44,5 +37,6 @@ public struct PlayerData {
         if(exp >= 10) {
             Debug.Log("레벨업!!");
         }
+
     }
 }
