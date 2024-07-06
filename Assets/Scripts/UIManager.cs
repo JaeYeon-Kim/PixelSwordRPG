@@ -13,8 +13,12 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     // 플레이어의 정보 관련 UI 담당 
-    [SerializeField] private Slider playerHp;
-    [SerializeField] private Slider playerExp;
+    [SerializeField] private Slider playerHp;       // 플레이어 HP 
+    [SerializeField] private Slider playerExp;      // 플레이어의 경험치 
+
+    [SerializeField] private Text playerLevelText;
+
+
     private float maxHp = 100;  // 유저의 총 체력 
     private float currentHp = 100;  // 유저의 현재 체력 
 
@@ -47,19 +51,25 @@ public class UIManager : MonoBehaviour
 
     // 유저의 체력 관리 
     public void UpdatePlayerHp() {
-        
+
     }
 
     // 유저의 경험치바 관리
-    public void UpdatePlayerExp(float currentExp, float maxExp) {
+    public void UpdatePlayerExp(float currentExp, float maxExp, int playerLevel) {
         this.currentExp = currentExp;
         this.maxExp = maxExp;
         playerExp.value = currentExp / maxExp;
+
+        if(playerExp.value >= 1) {
+            Debug.Log("여기 타니??정말로");
+            UpdatePlayerLevel(playerLevel);
+        }
     }
 
     // 유저의 레벨 관리 
-    public void UpdatePlayerLevel() {
-
+    private void UpdatePlayerLevel(int playerLevel) {
+        // 레벨 업데이트 
+        playerLevelText.text = "Lv " + playerLevel;
     }
 
 

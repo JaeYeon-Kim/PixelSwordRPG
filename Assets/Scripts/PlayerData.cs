@@ -31,12 +31,25 @@ public struct PlayerData {
 
     // 경험치 획득 메서드 
     public void GetExp(int expAmount) {
-        exp += expAmount;
+        this.exp += expAmount;
 
-        // 레벨업 체크 처리 
-        if(exp >= 10) {
-            Debug.Log("레벨업!!");
+        // 레벨업 체크 처리: 현재 경험치가 목표 경험치를 넘으면 처리  
+        if(this.exp >= this.maxExp) {
+            LevelUp();
         }
+    }
 
+    // 레벨업 메서드 
+    private void LevelUp() {
+        // 현재 경험치 초기화 
+        this.exp = 0;
+
+        // 목표 경험치 2배 증가 
+        this.maxExp *= 2;
+
+        // 레벨 증가 
+        this.level++;
+
+        Debug.Log("레벨 몇이니?" + level);
     }
 }

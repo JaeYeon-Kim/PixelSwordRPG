@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
         
         // 초기 유저 정보 할당
-        playerData = new PlayerData(1, 100, 100, 10, 0, 50);
+        playerData = new PlayerData(1, 100, 100, 10, 0, 20);
     }
 
     // Start is called before the first frame update
@@ -46,7 +46,9 @@ public class GameManager : MonoBehaviour
     public void GainExperience(int amount) {
         playerData.GetExp(amount);
 
+        Debug.Log("이때 플레이어 레벨 몇?" + playerData.level);
+
         // UIManager를 통해 경험치 UI 업데이트
-        UIManager.instance.UpdatePlayerExp(playerData.exp, playerData.maxExp);
+        UIManager.instance.UpdatePlayerExp(playerData.exp, playerData.maxExp, playerData.level);
     }
 }
