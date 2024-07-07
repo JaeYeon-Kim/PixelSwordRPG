@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        
+
         // 초기 유저 정보 할당
         playerData = new PlayerData(1, 100, 100, 10, 0, 20);
     }
@@ -43,7 +43,8 @@ public class GameManager : MonoBehaviour
     }
 
     // 경험치를 획득하는 메서드 
-    public void GainExperience(int amount) {
+    public void GainExperience(int amount)
+    {
         playerData.GetExp(amount);
 
         Debug.Log("이때 플레이어 레벨 몇?" + playerData.level);
@@ -53,10 +54,11 @@ public class GameManager : MonoBehaviour
     }
 
     // 플레이어가 데미지를 입는 메서드 
-    public void InflictDamageToPlayer(int damage) {
-    playerData.TakeDamage(damage);
+    public void InflictDamageToPlayer(int damage)
+    {
+        playerData.TakeDamage(damage);
 
-    // UI 업데이트
-    UIManager.instance.UpdatePlayerHp(playerData.currentHealth, playerData.maxHealth);
-}
+        // UI 업데이트
+        UIManager.instance.UpdatePlayerHp(playerData.currentHealth, playerData.maxHealth);
+    }
 }

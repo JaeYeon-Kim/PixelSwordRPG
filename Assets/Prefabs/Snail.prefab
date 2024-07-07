@@ -196,6 +196,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 20
   moveSpeed: 0.4
+  attackDamage: 0
+  monsterHpBar: {fileID: 4821174171025277064, guid: 6e18fba4f610f417598824e0c9c59a8a, type: 3}
+  canvas: {fileID: 0}
   hitEffect: {fileID: 292704178863708632, guid: 5c4d569992e5145cab7d18f3feecfa66, type: 3}
   hitSound: {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
   nextMove: 0

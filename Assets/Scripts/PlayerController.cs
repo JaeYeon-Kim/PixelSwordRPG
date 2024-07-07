@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
 
     AudioSource audioSource;
 
+    PlayerData playerData;
+
 
     [SerializeField] private float moveSpeed = 3.0f;    // 기본 이동 속도 
     [SerializeField] private float jumpForce = 5.0f;    // 점프 힘
@@ -46,42 +48,16 @@ public class PlayerController : MonoBehaviour
         if(audioSource == null) {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
+       
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+         playerData = GameManager.instance.playerData;
     }
 
     private void FixedUpdate()
     {
-        // // 빔을쏜다(Debug: 게임 창 상에서 보이지 않음) 매개변수: 빔 시작위치, 빔의 방향, 빔의 색
-        // Debug.DrawRay(rigid2D.position, Vector3.down, new Color(0, 1, 0));
-
-
-        // // RayCast를 쏴서 빔과 닿았는지 확인 : 파라미터: 빔 시작위치, 빔의 방향, distance, 닿은 Layer
-        // RaycastHit2D rayHit = Physics2D.Raycast(rigid2D.position, Vector3.down, 1, LayerMask.GetMask("Platform"));
-
-        // // 아래로 떨어질때만 빔을 쏨
-        // if (rigid2D.velocity.y < 0)
-        // {
-        //     if (rayHit.collider != null)
-        //     {
-        //         if (rayHit.distance < 0.3f)
-        //         {
-        //             isGrounded = true;
-        //             animator.SetBool("isJumping", false);
-        //         }
-        //     }
-        // }
-
-        // // 점프 횟수 구현
-        // if (isGrounded && rigid2D.velocity.y <= 0)
-        // {
-        //     currentJumpCount = maxJumpCount;
-        // }
-        //
-
         // 플레이어 오브젝트의 Collider 2D min, center, max 위치 정보
         Bounds bounds = boxCollider2D.bounds;
 

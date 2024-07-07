@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 
 
@@ -13,18 +13,21 @@ public class Enemy : MonoBehaviour
 {
 
     // 몬스터 기본 정보 설정 
-    [SerializeField] private int hp;        // 몬스터의 체력 
     [SerializeField] private float moveSpeed; // 몬스터의 스피드
-    
+
     [SerializeField] private float attackDamage; // 몬스터의 공격력
+
+    private int maxHp = 20;        // 몬스터의 총 체력 
+    private int currentHp = 20;    // 몬스터의 현재 체력 
 
 
     // 몬스터를 따라다니는 체력바 지정
     [SerializeField] private GameObject monsterHpBar;
     [SerializeField] private GameObject canvas;
 
-    RectTransform hpBar;
+    Slider hpSlider;
 
+    RectTransform hpBar;
 
     // 타격 이펙트 
     [SerializeField] private GameObject hitEffect;      // 효과 프리팹
@@ -53,7 +56,8 @@ public class Enemy : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         audioSource = GetComponent<AudioSource>();
-        if(audioSource == null) {
+        if (audioSource == null)
+        {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
         Invoke("Think", 5);
@@ -63,6 +67,8 @@ public class Enemy : MonoBehaviour
     {
         // 몬스터 생성시 몬스터 상단에 체력바 붙이기
         hpBar = Instantiate(monsterHpBar, canvas.transform).GetComponent<RectTransform>();
+        hpSlider = hpBar.GetComponentInChildren<Slider>();
+        hpSlider.value = maxHp;
     }
 
     // Update is called once per frame
@@ -103,19 +109,22 @@ public class Enemy : MonoBehaviour
         rigid2D.velocity = Vector2.zero;
         int knockbackDirection = playerPosition.x > transform.position.x ? -1 : 1;
         rigid2D.AddForce(new Vector2(0, 0.5f), ForceMode2D.Impulse);
-        hp -= damage;
+        currentHp -= damage;
+        hpSlider.value = (float) currentHp / (float) maxHp;
         GameObject cloneHitEffect = Instantiate(hitEffect, new Vector2(transform.position.x, transform.position.y + 0.1f), Quaternion.identity);
         animator.SetTrigger("isHit");
-        if(hitSound != null) {
+        if (hitSound != null)
+        {
             audioSource.PlayOneShot(hitSound);
         }
         StartCoroutine(HitEffectDelay(cloneHitEffect)); // 타격 이펙트 생성 및 재생 
 
-        Debug.Log("몬스터의 현재 체력: " + hp);
-        if (hp <= 0)
+        Debug.Log("몬스터의 현재 체력: " + currentHp);
+        if (currentHp <= 0)
         {
             rigid2D.velocity = Vector2.zero;        // 체력이 다닳으면 몬스터의 움직임을 멈춤 
-            if(cloneHitEffect != null) {            // 효과 이펙트가 남아있을경우 삭제 
+            if (cloneHitEffect != null)
+            {            // 효과 이펙트가 남아있을경우 삭제 
                 Destroy(cloneHitEffect);
             }
             Debug.Log("몬스터 사망");
@@ -160,23 +169,6 @@ public class Enemy : MonoBehaviour
         CancelInvoke();
         Invoke("Think", 5);
     }
-    
-
-    // 몬스터의 충돌 체크 
-    private void OnCollisionEnter2D(Collision2D collider)
-    {
-        // 몬스터가 바닥에 닿아있을 경우 isDamaged = false;
-        if (collider.gameObject.tag == "Platform")
-        {
-            isDamaged = false;
-        }
-
-        // 몬스터가 플레이어에게 닿았을 경우 플레이어의 체력을 깎는 로직 추가 
-        if(collider.gameObject.tag == "Player") {
-
-            collider.gameObject.GetComponent<PlayerController>().OnDamaged(transform.position);
-        }
-    }
 
 
     // 몬스터 죽음 딜레이용 
@@ -192,5 +184,21 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         Destroy(hitEffect);
+    }
+
+    // 몬스터의 충돌 체크 
+    private void OnCollisionEnter2D(Collision2D collider)
+    {
+        // 몬스터가 바닥에 닿아있을 경우 isDamaged = false;
+        if (collider.gameObject.tag == "Platform")
+        {
+            isDamaged = false;
+        }
+
+        // 몬스터가 플레이어에게 닿았을 경우 플레이어의 체력을 깎는 로직 추가 
+        if (collider.gameObject.tag == "Player")
+        {
+            collider.gameObject.GetComponent<PlayerController>().OnDamaged(transform.position);
+        }
     }
 }
