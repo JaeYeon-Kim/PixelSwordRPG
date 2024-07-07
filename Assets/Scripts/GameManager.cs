@@ -51,4 +51,12 @@ public class GameManager : MonoBehaviour
         // UIManager를 통해 경험치 UI 업데이트
         UIManager.instance.UpdatePlayerExp(playerData.exp, playerData.maxExp, playerData.level);
     }
+
+    // 플레이어가 데미지를 입는 메서드 
+    public void InflictDamageToPlayer(int damage) {
+    playerData.TakeDamage(damage);
+
+    // UI 업데이트
+    UIManager.instance.UpdatePlayerHp(playerData.currentHealth, playerData.maxHealth);
+}
 }

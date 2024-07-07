@@ -171,14 +171,10 @@ public class PlayerController : MonoBehaviour
 
     // 플레이어 충돌 이벤트 
     private void OnCollisionEnter2D(Collision2D collision) {
-        if(collision.gameObject.tag == "Enemy") {
-            Debug.Log("플레이어가 맞았습니다.");
-            OnDamaged(collision.transform.position);
-        }
     }
 
     // 적으로부터 데미지를 입었을 경우 무적 처리 
-    void OnDamaged(Vector2 targetPosition) {
+    public void OnDamaged(Vector2 targetPosition) {
         // playerDamaged 번호로 
         gameObject.layer = 9;
 
@@ -188,6 +184,9 @@ public class PlayerController : MonoBehaviour
         // Reaction Force(피격 당할 경우 튕겨져 나가는 힘 구현)
         int direction = transform.position.x - targetPosition.x > 0 ? 1 : -1;
         rigid2D.AddForce(new Vector2(direction, 1) * 2, ForceMode2D.Impulse);
+
+        // 체력 감소 시키기 UI
+        GameManager.instance.InflictDamageToPlayer(10);
 
         Invoke("OffDamaged", 2);
     }

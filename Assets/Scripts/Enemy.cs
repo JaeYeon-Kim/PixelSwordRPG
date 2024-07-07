@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour
     // 몬스터 기본 정보 설정 
     [SerializeField] private int hp;        // 몬스터의 체력 
     [SerializeField] private float moveSpeed; // 몬스터의 스피드
+    
+    [SerializeField] private float attackDamage; // 몬스터의 공격력
 
 
     // 몬스터를 따라다니는 체력바 지정
@@ -167,6 +169,12 @@ public class Enemy : MonoBehaviour
         if (collider.gameObject.tag == "Platform")
         {
             isDamaged = false;
+        }
+
+        // 몬스터가 플레이어에게 닿았을 경우 플레이어의 체력을 깎는 로직 추가 
+        if(collider.gameObject.tag == "Player") {
+
+            collider.gameObject.GetComponent<PlayerController>().OnDamaged(transform.position);
         }
     }
 

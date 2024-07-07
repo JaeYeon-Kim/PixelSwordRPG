@@ -52,4 +52,12 @@ public struct PlayerData {
 
         Debug.Log("레벨 몇이니?" + level);
     }
+
+    // 체력 감소 메서드
+    public void TakeDamage(int damageAmount) {
+        this.currentHealth -= damageAmount;
+        if(this.currentHealth <= 0) {
+            this.currentHealth = 0;
+        }
+    }
 }

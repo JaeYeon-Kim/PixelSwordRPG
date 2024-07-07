@@ -49,13 +49,9 @@ public class UIManager : MonoBehaviour
     {
     }
 
-    // 유저의 체력 관리 
-    public void UpdatePlayerHp() {
-
-    }
-
     // 유저의 경험치바 관리
-    public void UpdatePlayerExp(float currentExp, float maxExp, int playerLevel) {
+    public void UpdatePlayerExp(float currentExp, float maxExp, int playerLevel)
+    {
         this.currentExp = currentExp;
         this.maxExp = maxExp;
         playerExp.value = currentExp / maxExp;
@@ -64,8 +60,17 @@ public class UIManager : MonoBehaviour
     }
 
     // 유저의 레벨 관리 
-    private void UpdatePlayerLevel(int playerLevel) {
+    private void UpdatePlayerLevel(int playerLevel)
+    {
         // 레벨 업데이트 
         playerLevelText.text = "Lv " + playerLevel;
+    }
+
+    // 유저의 체력 관리 
+    public void UpdatePlayerHp(int currentHealth, int maxHealth)
+    {
+        this.currentHp = currentHealth;
+        this.maxHp = maxHealth;
+        playerHp.value = (float)currentHp / (float)maxHp;
     }
 }
