@@ -138,7 +138,8 @@ public class PlayerController : MonoBehaviour
             // Debug.Log(collider);
             // Collider에 걸린 녀석이 적개체 일경우 
             if(collider.tag == "Enemy") {
-                collider.GetComponent<Enemy>().TakeDamage(attackDamage, transform.position);
+                // collider.GetComponent<Enemy>().TakeDamage(attackDamage, transform.position);
+                collider.GetComponent<TestMonster>().TakeDamage(2);
             } else {
                 return;
             }
