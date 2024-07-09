@@ -142,7 +142,12 @@ public class Enemy : MonoBehaviour
             }
             Debug.Log("몬스터 사망");
             animator.SetTrigger("isDie");           // 사망 애니메이션 실행 
-            StartCoroutine(DelayedDie(1f));         // 프리팹 삭제 
+            // spawn 시스템에게 자신이 제거되었다는것을 알려줌 
+            SpawnManager.instance.enemyCount--;
+            SpawnManager.instance.isSpawn[int.Parse(transform.parent.name) - 1] = false;
+            Destroy(gameObject);    // 몬스터 제거 
+            Destroy(hpBar.gameObject); // hpBar제거
+
 
             DropCoin();
 
@@ -193,16 +198,16 @@ public class Enemy : MonoBehaviour
 
 
 
-    // 몬스터 죽음 딜레이용 
-    IEnumerator DelayedDie(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        // spawn 시스템에게 자신이 제거되었다는것을 알려줌 
-        SpawnManager.instance.enemyCount--;
-        SpawnManager.instance.isSpawn[int.Parse(transform.parent.name) - 1] = false;
-        Destroy(gameObject);    // 몬스터 제거 
-        Destroy(hpBar.gameObject); // hpBar제거
-    }
+    // // 몬스터 죽음 딜레이용 
+    // IEnumerator DelayedDie(float delay)
+    // {
+    //     yield return new WaitForSeconds(delay);
+    //     // spawn 시스템에게 자신이 제거되었다는것을 알려줌 
+    //     SpawnManager.instance.enemyCount--;
+    //     SpawnManager.instance.isSpawn[int.Parse(transform.parent.name) - 1] = false;
+    //     Destroy(gameObject);    // 몬스터 제거 
+    //     Destroy(hpBar.gameObject); // hpBar제거
+    // }
 
     // 몬스터 hitEffect Delay용
     IEnumerator HitEffectDelay(GameObject hitEffect)

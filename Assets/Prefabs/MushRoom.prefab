@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2119050665177553231}
   - component: {fileID: 3502548540584252660}
   - component: {fileID: 8983136842306830694}
-  - component: {fileID: 7670058740775705991}
+  - component: {fileID: 4115753740475767312}
   m_Layer: 7
   m_Name: MushRoom
   m_TagString: Enemy
@@ -34,7 +34,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5796837954797355524}
+  - {fileID: 6738082175893446704}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6081353496300929264
@@ -182,7 +182,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.31, y: 0.35}
   m_EdgeRadius: 0
---- !u!114 &7670058740775705991
+--- !u!114 &4115753740475767312
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -191,11 +191,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 4784496274872701261}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b59c068e83704274991df8e5941d1ac, type: 3}
+  m_Script: {fileID: 11500000, guid: a70f72cff85f7439abfcb354c55d8d21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 3
---- !u!1 &5928999886133069221
+  moveSpeed: 0.5
+  attackDamage: 0
+  coinPrefab: {fileID: 8318390630490512727, guid: a00a30114138a492e947d2e5b0f148ed, type: 3}
+  monsterHpBar: {fileID: 4821174171025277064, guid: 6e18fba4f610f417598824e0c9c59a8a, type: 3}
+  hudDamageText: {fileID: 8969756330037842502, guid: c9872de89ab8a419eb85a7ec05058c4e, type: 3}
+  hudPosition: {fileID: 6738082175893446704}
+  hitEffect: {fileID: 292704178863708632, guid: 5c4d569992e5145cab7d18f3feecfa66, type: 3}
+  hitSound: {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
+  nextMove: 0
+--- !u!1 &7449767673867825000
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,62 +211,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5796837954797355524}
-  - component: {fileID: 4514596566059666932}
+  - component: {fileID: 6738082175893446704}
   m_Layer: 7
-  m_Name: Sensor
+  m_Name: Hud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5796837954797355524
+--- !u!4 &6738082175893446704
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5928999886133069221}
+  m_GameObject: {fileID: 7449767673867825000}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1110377256057656862}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &4514596566059666932
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5928999886133069221}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 2
