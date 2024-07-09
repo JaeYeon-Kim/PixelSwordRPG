@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 /*
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
 
 
         // 초기 유저 정보 할당
-        playerData = new PlayerData(1, 100, 100, 10, 0, 20);
+        playerData = new PlayerData(1, 100, 100, 10, 0, 20, 0);
     }
 
     // Start is called before the first frame update
@@ -60,5 +61,21 @@ public class GameManager : MonoBehaviour
 
         // UI 업데이트
         UIManager.instance.UpdatePlayerHp(playerData.currentHealth, playerData.maxHealth);
+    }
+
+    // 플레이어가 골드를 획득하는 메서드 
+    public void GetGold(int coinAmount)
+    {
+
+        playerData.GetGold(coinAmount);
+
+        // UI 업데이트 
+        UIManager.instance.UpdatePlayerGold(coinAmount);
+    }
+
+    // 게임 재시작 메서드
+    public void GameRestart() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Debug.Log("게임 재시작!!");
     }
 }

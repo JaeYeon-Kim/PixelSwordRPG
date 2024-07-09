@@ -11,11 +11,11 @@ public class PlayerController : MonoBehaviour
 
     AudioSource audioSource;
 
-    PlayerData playerData;
-
 
     [SerializeField] private float moveSpeed = 3.0f;    // 기본 이동 속도 
     [SerializeField] private float jumpForce = 5.0f;    // 점프 힘
+
+    private int health = 0;
 
     [SerializeField] private LayerMask groundLayer; // 바닥 체크를 위한 충돌 레이어
     private BoxCollider2D boxCollider2D;    // 오브젝트의 충돌 범위 컴포넌트 
@@ -45,15 +45,15 @@ public class PlayerController : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         audioSource = GetComponent<AudioSource>();
-        if(audioSource == null) {
+        if (audioSource == null)
+        {
             audioSource = gameObject.AddComponent<AudioSource>();
         }
-       
+
     }
     // Start is called before the first frame update
     void Start()
     {
-         playerData = GameManager.instance.playerData;
     }
 
     private void FixedUpdate()
@@ -80,7 +80,8 @@ public class PlayerController : MonoBehaviour
     }
 
     // OverlapBox는 보이지 않기 때문에 그림으로 그려줌
-    private void OnDrawGizmos() {
+    private void OnDrawGizmos()
+    {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(pos.position, boxSize);
     }
@@ -119,7 +120,8 @@ public class PlayerController : MonoBehaviour
 
 
     // 플레이어의 공격 처리 
-    public void Attack() {
+    public void Attack()
+    {
         // 공격 데미지 설정 
         attackDamage = Random.Range(1, 5);
 
@@ -137,27 +139,31 @@ public class PlayerController : MonoBehaviour
         {
             // Debug.Log(collider);
             // Collider에 걸린 녀석이 적개체 일경우 
-            if(collider.tag == "Enemy") {
-                // collider.GetComponent<Enemy>().TakeDamage(attackDamage, transform.position);
-                collider.GetComponent<TestMonster>().TakeDamage(2);
-            } else {
+            if (collider.tag == "Enemy")
+            {
+                collider.GetComponent<Enemy>().TakeDamage(attackDamage, transform.position);
+            }
+            else
+            {
                 return;
             }
         }
     }
 
     // 플레이어 충돌 이벤트 
-    private void OnCollisionEnter2D(Collision2D collision) {
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
     }
 
     // 적으로부터 데미지를 입었을 경우 무적 처리 
-    public void OnDamaged(Vector2 targetPosition) {
+    public void OnDamaged(Vector2 targetPosition)
+    {
         // playerDamaged 번호로 
         gameObject.layer = 9;
 
         // 맞았을 경우 플레이어의 색을 변경 해줌(살짝 반투명)
-        spriteRenderer.color = new Color(1, 1, 1, 0.4f); 
-        
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+
         // Reaction Force(피격 당할 경우 튕겨져 나가는 힘 구현)
         int direction = transform.position.x - targetPosition.x > 0 ? 1 : -1;
         rigid2D.AddForce(new Vector2(direction, 1) * 2, ForceMode2D.Impulse);
@@ -166,12 +172,27 @@ public class PlayerController : MonoBehaviour
         GameManager.instance.InflictDamageToPlayer(10);
 
         Invoke("OffDamaged", 2);
+
+
+        // 플레이어의 체력이 모두 닳을 경우 
+        if (GameManager.instance.playerData.currentHealth <= 0)
+        {
+            StartCoroutine(Die());
+        }
     }
 
     // 무적 처리를 해제 
-    private void OffDamaged() {
+    private void OffDamaged()
+    {
         gameObject.layer = 8;
         spriteRenderer.color = new Color(1, 1, 1, 1);
     }
 
+    // 플레이어의 죽음 처리
+    IEnumerator Die()
+    {
+        animator.SetTrigger("isDead");
+        yield return new WaitForSeconds(3.0f);
+        GameManager.instance.GameRestart();
+    }
 }

@@ -15,17 +15,20 @@ public struct PlayerData {
 
     public float maxExp;
 
+    public int currentGold;
+
 
 
     // 생성자
     public PlayerData(int initialLevel, int initialMaxHealth, int initialCurrentHealth, int initialAttackPower, 
-    float currentExp, float finalExp) {
+    float currentExp, float finalExp, int getGold) {
         level = initialLevel;
         maxHealth = initialMaxHealth;
         currentHealth = initialCurrentHealth;
         attackPower = initialAttackPower;
         exp = currentExp;
         maxExp = finalExp;
+        currentGold = getGold;
     }
 
 
@@ -59,5 +62,11 @@ public struct PlayerData {
         if(this.currentHealth <= 0) {
             this.currentHealth = 0;
         }
+    }
+
+    // 골드 증가 메서드 
+    public void GetGold(int goldAmount) {
+        Debug.Log("획득한 골드량 표시 " + goldAmount);
+        this.currentGold += goldAmount;
     }
 }

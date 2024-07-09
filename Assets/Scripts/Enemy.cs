@@ -17,6 +17,8 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private float attackDamage; // 몬스터의 공격력
 
+    [SerializeField] GameObject coinPrefab; // 몬스터가 죽을 경우 드랍할 코인 프리팹
+
     private int maxHp = 20;        // 몬스터의 총 체력 
     private int currentHp = 20;    // 몬스터의 현재 체력 
 
@@ -131,6 +133,8 @@ public class Enemy : MonoBehaviour
             animator.SetTrigger("isDie");           // 사망 애니메이션 실행 
             StartCoroutine(DelayedDie(1f));         // 프리팹 삭제 
 
+            DropCoin();
+
             // 경험치 획득 - 테스트용
             GameManager.instance.GainExperience(10);
         }
@@ -169,6 +173,12 @@ public class Enemy : MonoBehaviour
         CancelInvoke();
         Invoke("Think", 5);
     }
+
+    // 몬스터가 드랍할 코인 
+    void DropCoin() {
+        GameObject coin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
+    }
+
 
 
     // 몬스터 죽음 딜레이용 

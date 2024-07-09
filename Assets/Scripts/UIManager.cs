@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Slider playerExp;      // 플레이어의 경험치 
 
     [SerializeField] private Text playerLevelText;
+
+    [SerializeField] private Text playerGoldText;
 
 
     private float maxHp = 100;  // 유저의 총 체력 
@@ -72,5 +75,11 @@ public class UIManager : MonoBehaviour
         this.currentHp = currentHealth;
         this.maxHp = maxHealth;
         playerHp.value = (float)currentHp / (float)maxHp;
+    }
+
+    // 유저의 골드 관리 
+    public void UpdatePlayerGold(int coinAmount) {
+        Debug.Log("UI로 들어오는 골드" + coinAmount);
+        playerGoldText.text = coinAmount.ToString();
     }
 }
