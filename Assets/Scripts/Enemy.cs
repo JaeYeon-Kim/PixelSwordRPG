@@ -31,6 +31,11 @@ public class Enemy : MonoBehaviour
 
     RectTransform hpBar;
 
+    // HudText
+    [SerializeField] private GameObject hudDamageText;
+    [SerializeField] Transform hudPosition;
+
+
     // 타격 이펙트 
     [SerializeField] private GameObject hitEffect;      // 효과 프리팹
 
@@ -120,6 +125,12 @@ public class Enemy : MonoBehaviour
             audioSource.PlayOneShot(hitSound);
         }
         StartCoroutine(HitEffectDelay(cloneHitEffect)); // 타격 이펙트 생성 및 재생 
+
+        // HudText 표시 
+        GameObject hudText = Instantiate(hudDamageText);
+        hudText.transform.position = hudPosition.position;
+        hudText.GetComponent<DamageText>().damage = damage;
+
 
         Debug.Log("몬스터의 현재 체력: " + currentHp);
         if (currentHp <= 0)

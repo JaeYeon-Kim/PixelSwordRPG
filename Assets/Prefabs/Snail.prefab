@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &961279497588790159
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2100642892044264376}
+  m_Layer: 7
+  m_Name: Hud
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2100642892044264376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961279497588790159}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 0.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1327643286932057541}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1625707899287955136
 GameObject:
   m_ObjectHideFlags: 0
@@ -34,7 +65,8 @@ Transform:
   m_LocalPosition: {x: 0.757, y: -0.34, z: -1}
   m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2100642892044264376}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6991251632925949015
@@ -194,11 +226,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70f72cff85f7439abfcb354c55d8d21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 20
   moveSpeed: 0.4
   attackDamage: 0
+  coinPrefab: {fileID: 8318390630490512727, guid: a00a30114138a492e947d2e5b0f148ed, type: 3}
   monsterHpBar: {fileID: 4821174171025277064, guid: 6e18fba4f610f417598824e0c9c59a8a, type: 3}
   canvas: {fileID: 0}
+  hudDamageText: {fileID: 8969756330037842502, guid: c9872de89ab8a419eb85a7ec05058c4e, type: 3}
+  hudPosition: {fileID: 2100642892044264376}
   hitEffect: {fileID: 292704178863708632, guid: 5c4d569992e5145cab7d18f3feecfa66, type: 3}
   hitSound: {fileID: 8300000, guid: 8b23b175a78d6b5458322e3a6c9905d0, type: 3}
   nextMove: 0
