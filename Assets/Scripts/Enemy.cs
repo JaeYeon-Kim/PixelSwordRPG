@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
 
     // 몬스터를 따라다니는 체력바 지정
     [SerializeField] private GameObject monsterHpBar;
-    [SerializeField] private GameObject canvas;
+    // [SerializeField] private GameObject canvas;
 
     Slider hpSlider;
 
@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         // 몬스터 생성시 몬스터 상단에 체력바 붙이기
-        hpBar = Instantiate(monsterHpBar, canvas.transform).GetComponent<RectTransform>();
+        hpBar = Instantiate(monsterHpBar, GameObject.Find("Canvas").transform).GetComponent<RectTransform>();
         hpSlider = hpBar.GetComponentInChildren<Slider>();
         hpSlider.value = maxHp;
     }
@@ -117,7 +117,7 @@ public class Enemy : MonoBehaviour
         int knockbackDirection = playerPosition.x > transform.position.x ? -1 : 1;
         rigid2D.AddForce(new Vector2(0, 0.5f), ForceMode2D.Impulse);
         currentHp -= damage;
-        hpSlider.value = (float) currentHp / (float) maxHp;
+        hpSlider.value = (float)currentHp / (float)maxHp;
         GameObject cloneHitEffect = Instantiate(hitEffect, new Vector2(transform.position.x, transform.position.y + 0.1f), Quaternion.identity);
         animator.SetTrigger("isHit");
         if (hitSound != null)
@@ -186,7 +186,8 @@ public class Enemy : MonoBehaviour
     }
 
     // 몬스터가 드랍할 코인 
-    void DropCoin() {
+    void DropCoin()
+    {
         GameObject coin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
     }
 
@@ -196,6 +197,9 @@ public class Enemy : MonoBehaviour
     IEnumerator DelayedDie(float delay)
     {
         yield return new WaitForSeconds(delay);
+        // spawn 시스템에게 자신이 제거되었다는것을 알려줌 
+        SpawnManager.instance.enemyCount--;
+        SpawnManager.instance.isSpawn[int.Parse(transform.parent.name) - 1] = false;
         Destroy(gameObject);    // 몬스터 제거 
         Destroy(hpBar.gameObject); // hpBar제거
     }
