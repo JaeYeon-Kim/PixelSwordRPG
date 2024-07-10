@@ -141,13 +141,15 @@ public class Enemy : MonoBehaviour
                 Destroy(cloneHitEffect);
             }
             animator.SetTrigger("isDie");           // 사망 애니메이션 실행 
-            // spawn 시스템에게 자신이 제거되었다는것을 알려줌 
-            // 몬스터 판단
+            // 몬스터를 판단하여 spawn 시스템에게 자신이 제거되었다는것을 알려줌 
+            // 버섯일때 
             if (gameObject.name == "MushRoom(Clone)")
             {   Debug.Log("버섯!!");
                 SpawnManager2.instance.enemyCount--;
                 SpawnManager2.instance.isSpawn[int.Parse(transform.parent.name) - 1] = false;
             }
+
+            // 달팽이 일때 
             else if (gameObject.name == "Snail(Clone)")
             {
                 Debug.Log("달팽이!!");

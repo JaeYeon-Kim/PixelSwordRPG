@@ -1009,7 +1009,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 5
+  m_Mass: 20
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -10938,7 +10938,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1830667391}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89ee664ae8153497fb03971a5eb800f5, type: 3}
+  m_Script: {fileID: 11500000, guid: 991e505fa8424460eb6e880955fc92f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoints:
@@ -10953,7 +10953,7 @@ MonoBehaviour:
   - {fileID: 1175308236}
   - {fileID: 978833230}
   enemy: {fileID: 4784496274872701261, guid: 0d48e4054ecb54369a6d04a1c783f860, type: 3}
-  spawnTime: 2
+  spawnTime: 3
   enemyCount: 0
   maxCount: 10
   isSpawn: 
