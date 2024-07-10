@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 스폰 관리 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager2 : MonoBehaviour
 {
 
 
@@ -30,7 +30,7 @@ public class SpawnManager : MonoBehaviour
     // 중복 생성 제한을 위한 변수 
     public bool[] isSpawn;
 
-    public static SpawnManager instance;
+    public static SpawnManager2 instance;
     private void Awake()
     {
         isSpawn = new bool[spawnPoints.Length];
@@ -38,6 +38,7 @@ public class SpawnManager : MonoBehaviour
         {
             isSpawn[i] = false;
         }
+
         if (instance == null)
         {
             instance = this;

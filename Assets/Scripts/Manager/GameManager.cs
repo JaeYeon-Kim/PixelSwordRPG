@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         playerData.GetGold(coinAmount);
 
         // UI 업데이트 
-        UIManager.instance.UpdatePlayerGold(coinAmount);
+        UIManager.instance.UpdatePlayerGold(playerData.currentGold);
     }
 
     // 게임 재시작 메서드

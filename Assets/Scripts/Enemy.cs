@@ -131,20 +131,30 @@ public class Enemy : MonoBehaviour
         hudText.transform.position = hudPosition.position;
         hudText.GetComponent<DamageText>().damage = damage;
 
-
-        Debug.Log("몬스터의 현재 체력: " + currentHp);
         if (currentHp <= 0)
         {
+            Debug.Log("몬스터 체력다닳음!!" + gameObject.name);
+            
             rigid2D.velocity = Vector2.zero;        // 체력이 다닳으면 몬스터의 움직임을 멈춤 
             if (cloneHitEffect != null)
             {            // 효과 이펙트가 남아있을경우 삭제 
                 Destroy(cloneHitEffect);
             }
-            Debug.Log("몬스터 사망");
             animator.SetTrigger("isDie");           // 사망 애니메이션 실행 
             // spawn 시스템에게 자신이 제거되었다는것을 알려줌 
-            SpawnManager.instance.enemyCount--;
-            SpawnManager.instance.isSpawn[int.Parse(transform.parent.name) - 1] = false;
+            // 몬스터 판단
+            if (gameObject.name == "MushRoom(Clone)")
+            {   Debug.Log("버섯!!");
+                SpawnManager2.instance.enemyCount--;
+                SpawnManager2.instance.isSpawn[int.Parse(transform.parent.name) - 1] = false;
+            }
+            else if (gameObject.name == "Snail(Clone)")
+            {
+                Debug.Log("달팽이!!");
+                SpawnManager.instance.enemyCount--;
+                Debug.Log("transform parent name: "+transform.parent.name);
+                SpawnManager.instance.isSpawn[int.Parse(transform.parent.name) - 1] = false;
+            }
             Destroy(gameObject);    // 몬스터 제거 
             Destroy(hpBar.gameObject); // hpBar제거
 

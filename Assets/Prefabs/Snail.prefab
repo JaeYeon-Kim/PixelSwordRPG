@@ -154,7 +154,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 10
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -230,7 +230,6 @@ MonoBehaviour:
   attackDamage: 0
   coinPrefab: {fileID: 8318390630490512727, guid: a00a30114138a492e947d2e5b0f148ed, type: 3}
   monsterHpBar: {fileID: 4821174171025277064, guid: 6e18fba4f610f417598824e0c9c59a8a, type: 3}
-  canvas: {fileID: 0}
   hudDamageText: {fileID: 8969756330037842502, guid: c9872de89ab8a419eb85a7ec05058c4e, type: 3}
   hudPosition: {fileID: 2100642892044264376}
   hitEffect: {fileID: 292704178863708632, guid: 5c4d569992e5145cab7d18f3feecfa66, type: 3}
