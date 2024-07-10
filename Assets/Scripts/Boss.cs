@@ -14,7 +14,7 @@ public class Boss : MonoBehaviour
     // 상태를 지정할 EnumClass
     private enum State
     {
-        Idle, Move, Attack, Chase
+        Idle, Attack, Chase
     }
     Animator animator;
     Rigidbody2D rigid;
@@ -27,7 +27,6 @@ public class Boss : MonoBehaviour
     private State currentState;
 
     private float move = 0;
-    private float moveSpeed = 2.0f;
 
 
     // 몬스터의 능력 지정 
@@ -43,16 +42,19 @@ public class Boss : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    // 기본 Start Coroutine으로 변경 가능 
+    IEnumerator Start()
     {
-        currentState = State.Idle;
+        // 몬스터의 체력이 0이상인 동안에는 계속 코루틴을 반환
+        while (currentHp > 0) {
+            yield return StartCoroutine(currentState.ToString());
+        }
     }
 
     private void FixedUpdate()
     {
         // 각 상태에서 move값 변경 후 move값에 따라 x축으로 이동 y축은 현재 속도 그대로 
-        rigid.velocity = new Vector2(move * moveSpeed * Time.fixedDeltaTime, rigid.velocity.y);
+        rigid.velocity = new Vector2(move, rigid.velocity.y);
     }
 
 
@@ -71,7 +73,7 @@ public class Boss : MonoBehaviour
     // 이동 
     private void Move()
     {
-        Debug.Log("이동");
+        
     }
 
     // 공격
@@ -82,9 +84,19 @@ public class Boss : MonoBehaviour
 
 
     // 몬스터가 플레이어로 부터 공격 받았을때 
-    public void OnDamaged()
+    public void OnDamaged(int getDamage)
     {
         Debug.Log("공격받았을때 데미지 처리");
+        currentHp -= getDamage; // 현재 체력에서 damage 만큼 깎음
+
+        if(currentHp <= 0) {
+            // HP가 0이하가 될 경우 사망 처리 
+            Die();
+        }
+    }
+
+    private void Die() {
+
     }
 
     // 추격
@@ -104,15 +116,17 @@ public class Boss : MonoBehaviour
                 // Player가 오른쪽에 있으면
                 if (vec.x > 0)
                 {
-                    spriteRenderer.flipX = true;
+                    spriteRenderer.flipX = false;
                     move = 1f;
+                    animator.SetBool("isMove", true);
                 }
 
                 // Player가 왼쪽에 있으면 
                 else
                 {
-                    spriteRenderer.flipX = false;
+                    spriteRenderer.flipX = true;
                     move = -1f;
+                    animator.SetBool("isMove", true);
                 }
 
             }

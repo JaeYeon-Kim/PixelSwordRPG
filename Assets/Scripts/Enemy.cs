@@ -206,6 +206,18 @@ public class Enemy : MonoBehaviour
     void DropCoin()
     {
         GameObject coin = Instantiate(coinPrefab, transform.position, Quaternion.identity);
+
+        // // 코인의 RigidBody 가져오기
+        // Rigidbody2D coinRigidBody = coin.GetComponent<Rigidbody2D>();
+
+        // // 코인을 띄워 올림
+        // float jumpForce = 2.0f;
+
+        // coinRigidBody.velocity = new Vector2(0, jumpForce);
+
+        // // 중력 설정
+        // coinRigidBody.gravityScale = 1.0f;
+        
     }
 
 
