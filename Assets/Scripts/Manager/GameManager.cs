@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
 
     public PlayerData playerData;
 
+    
+    [SerializeField] private string[] tutorialDialogue;
+
 
     private void Awake()
     {
@@ -35,6 +38,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SoundManager.instance.PlaySound(0);
+        StartCoroutine(TutorialDialogue());
     }
 
     // Update is called once per frame
@@ -77,5 +81,11 @@ public class GameManager : MonoBehaviour
     public void GameRestart() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Debug.Log("게임 재시작!!");
+    }
+
+    // 처음시작시 나오는 다이얼로그
+    IEnumerator TutorialDialogue() {
+        yield return new WaitForSeconds(1f);
+        DialogueManager.instance.OnDialogue(tutorialDialogue);
     }
 }

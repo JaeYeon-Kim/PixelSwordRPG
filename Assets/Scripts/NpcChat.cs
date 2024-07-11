@@ -10,6 +10,9 @@ public class NpcChat : MonoBehaviour
     public Transform ChatTr;        // 말풍선 생성 위치 
     public GameObject chatBoxPrefab;    // chatBox 복제용
 
+    public string[] mainSentences;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,5 +24,9 @@ public class NpcChat : MonoBehaviour
         GameObject go = Instantiate(chatBoxPrefab);
         go.GetComponent<ChatSystem>().OnDialogue(sentences, ChatTr);
         Invoke("TalkNpc", 10f);
+    }
+
+    private void OnMouseDown() {
+        DialogueManager.instance.OnDialogue(mainSentences);    
     }
 }
