@@ -137,7 +137,6 @@ public class PlayerController : MonoBehaviour
         // 이중 Enemy 값만 골라줌 
         foreach (Collider2D collider in collider2Ds)
         {
-            // Debug.Log(collider);
             // Collider에 걸린 녀석이 적개체 일경우 
             if (collider.tag == "Enemy")
             {

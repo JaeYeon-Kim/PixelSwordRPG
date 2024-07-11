@@ -10,6 +10,7 @@ TagManager:
   - Coin
   - AttackRange
   - DetectRange
+  - Boss
   layers:
   - Default
   - TransparentFX

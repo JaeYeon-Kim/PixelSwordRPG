@@ -41,7 +41,7 @@ public class Boss : MonoBehaviour
 
     // 공격 딜레이용 변수 
     private float curTime;
-    public float coolTime = 0.5f;
+    public float coolTime = 2f;
 
     // 추격 거리와 공격 거리 
     float chaseDistance = 6f;
@@ -90,32 +90,27 @@ public class Boss : MonoBehaviour
     // 공격
     IEnumerator Attack()
     {
-        // // 공격 딜레이를 줌 : curtime이 0보다 작을때 z키를 누르면 공격이되고, curTime은 coolTime으로 초기화 
-        // if (curTime <= 0)
-        // {
-        //     Debug.Log("공격 내부 타니?");
-        //     animator.SetBool("isAttack", true);
-        //     // 공격 
-        //     curTime = coolTime;
-        // }
-        // else
-        // {
-        //     curTime -= Time.deltaTime;
-        // }
+        Debug.Log("공격!!");
+        move = 0;
+        animator.SetBool("isMove", false);
 
         if (!isAttacking)
         {
             isAttacking = true;
             animator.SetBool("isAttack", true);
-            // 공격 딜레이 후 공격 실행 
-            yield return new WaitForSeconds(coolTime);
             Debug.Log("플레이어에게 20의 데미지를 입힘!!");
-
-            animator.SetBool("isAttack", false);    // isAttack 애니메이션을 끝냄
+            yield return new WaitForSeconds(0.8f);
+            animator.SetBool("isAttack", false);
             isAttacking = false;
-
-            ChangeState(State.Chase); // 공격 후 추격 상태로 변경 
         }
+
+        Vector3 vec = player.transform.position - transform.position;
+        if (vec.magnitude > attackDistance)
+        {
+            // 멀어지면
+            ChangeState(State.Chase);
+        }
+        yield return null;
     }
 
 
