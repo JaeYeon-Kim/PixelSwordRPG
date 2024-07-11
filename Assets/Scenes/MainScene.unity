@@ -10941,7 +10941,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1796613371}
   - component: {fileID: 1796613372}
-  m_Layer: 0
+  - component: {fileID: 1796613373}
+  m_Layer: 7
   m_Name: DetectSensor
   m_TagString: DetectRange
   m_Icon: {fileID: 0}
@@ -10998,6 +10999,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1.5
+--- !u!114 &1796613373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796613370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cff6e24c538f45c8a73905aaa83bab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1798650862
 GameObject:
   m_ObjectHideFlags: 0
@@ -12675,7 +12688,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1879967479}
   - component: {fileID: 1879967480}
-  m_Layer: 0
+  - component: {fileID: 1879967481}
+  m_Layer: 7
   m_Name: AttackSensor
   m_TagString: AttackRange
   m_Icon: {fileID: 0}
@@ -12732,6 +12746,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &1879967481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879967478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1075b87bedb0e41419dfd5be30fbab61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1885847482
 GameObject:
   m_ObjectHideFlags: 0
@@ -13136,9 +13162,9 @@ GameObject:
   - component: {fileID: 2020877419}
   - component: {fileID: 2020877418}
   - component: {fileID: 2020877420}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Goblin
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

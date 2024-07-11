@@ -26,7 +26,7 @@ public class Boss : MonoBehaviour
     private Transform player;
 
 
-    private State currentState;
+    public State currentState;
 
     private float move = 0;
 
@@ -75,30 +75,32 @@ public class Boss : MonoBehaviour
         currentState = newState;
     }
 
-    // private void Idle()
-    // {
-    //     Debug.Log("정지 상태로 들어오니?");
-    //     // 움직이지 않음 
-    //     move = 0;
-    //     animator.SetBool("isMove", false);
-    // }
+    // 코루틴 정지 
+    public void StopState(State currentState) {
+        StopCoroutine(currentState.ToString());
+    }
 
     IEnumerator Idle()
     {
         yield return new WaitForSeconds(0.1f);
         Debug.Log("정지");
         move = 0;
+        animator.SetBool("isAttack", false);
+        animator.SetBool("isMove", false);
     }
     // 공격
     IEnumerator Attack()
     {
+        if(currentState != State.Attack) yield break;
+
         Debug.Log("공격 들어오니?");
         yield return new WaitForSeconds(0.1f);
         Debug.Log("공격!");
         // 공격 딜레이를 줌 : curtime이 0보다 작을때 z키를 누르면 공격이되고, curTime은 coolTime으로 초기화 
         if (curTime <= 0)
         {
-            animator.SetTrigger("isAttack");
+            Debug.Log("공격 내부 타니?");
+            animator.SetBool("isAttack", true);
             // 공격 
             curTime = coolTime;
         }
@@ -136,7 +138,11 @@ public class Boss : MonoBehaviour
 
             do
             {
+                if(currentState != State.Chase) yield break;
+
                 yield return new WaitForSeconds(0.5f);
+
+                animator.SetBool("isAttack", false);
 
                 // Player와의 방향 벡터 : 플레이어의 위치 파악 용도  
                 vec = player.transform.position - transform.position;
@@ -156,14 +162,6 @@ public class Boss : MonoBehaviour
                     move = -1f;
                     animator.SetBool("isMove", true);
                 }
-
-                if (vec.magnitude <= 2.0f)
-                {
-                    Debug.Log("magenitude 들어오니?");
-                    ChangeState(State.Attack);
-                    yield break;
-                }
-
             }
 
             // 거리가 6이내인 동안 따라 다니기 
@@ -173,19 +171,6 @@ public class Boss : MonoBehaviour
             // Player가 멀어질 경우 State를 Idle로 변경
             ChangeState(State.Idle);
         }
-    }
-
-
-    // Sensor에 Player가 감지되면 발생하는 이벤트 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {   
-
-        // 충돌한 객체가 플레이어가 아닌 경우
-        if (collision.gameObject.name != "Player") return;
-
-
-        // 현재 상태가 추적상태가 아닐 경우 추적 상태로 변경 
-        if (currentState != State.Chase) ChangeState(State.Chase);
     }
 
 }
