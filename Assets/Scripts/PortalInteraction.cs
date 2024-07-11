@@ -23,7 +23,8 @@ public class PortalInteraction : MonoBehaviour
 
 
 
-    private void Awake() {
+    private void Awake()
+    {
         mainCameraController = Camera.main.GetComponent<MainCameraController>();
     }
 
@@ -40,11 +41,19 @@ public class PortalInteraction : MonoBehaviour
         if (isPortalTriggered && Input.GetKeyDown(KeyCode.UpArrow))
         {
             Debug.Log("포탈 작동!!");
-            mainCameraController.minCameraBoundary = newMinCameraBoundary;
-            mainCameraController.maxCameraBoundary = newMaxCameraBoundary;
-
-            mainCameraController.player.position = exitPos.position + (Vector3)playerPosOffset;
+            // FadeInFadeout 
+            UIManager.instance.Fade();
+            // FadeInFadeOut 시작하고 1초뒤에 동작 
+            Invoke("SetCameraPosition", 1.0f);
         }
+    }
+
+    private void SetCameraPosition()
+    {
+        mainCameraController.minCameraBoundary = newMinCameraBoundary;
+        mainCameraController.maxCameraBoundary = newMaxCameraBoundary;
+
+        mainCameraController.player.position = exitPos.position + (Vector3)playerPosOffset;
     }
 
 

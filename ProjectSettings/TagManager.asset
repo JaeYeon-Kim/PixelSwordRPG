@@ -8,6 +8,8 @@ TagManager:
   - Platform
   - NPC
   - Coin
+  - AttackRange
+  - DetectRange
   layers:
   - Default
   - TransparentFX
