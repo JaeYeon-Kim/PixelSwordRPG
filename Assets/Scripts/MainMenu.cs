@@ -23,6 +23,7 @@ public class MainMenu : MonoBehaviour
     public void OnClickNewGame() {
         Debug.Log("게임시작!!");
         mainUi.gameObject.SetActive(false);
+        StartCoroutine(GameManager.instance.TutorialDialogue());
     }
 
     // 옵션 설정
