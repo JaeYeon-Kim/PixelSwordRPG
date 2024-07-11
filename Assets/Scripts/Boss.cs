@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Resources;
 using Unity.VisualScripting;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
 using UnityEngine.UIElements;
@@ -14,7 +16,7 @@ public class Boss : MonoBehaviour
 {
 
     // 상태를 지정할 EnumClass
-    public enum State
+    enum State
     {
         Idle, Attack, Chase
     }
@@ -26,7 +28,7 @@ public class Boss : MonoBehaviour
     private Transform player;
 
 
-    public State currentState;
+    State currentState;
 
     private float move = 0;
 
@@ -41,8 +43,12 @@ public class Boss : MonoBehaviour
     private float curTime;
     public float coolTime = 0.5f;
 
-    // 공격 감지 거리
-    private float attackDetectDistance = 1.5f;
+    // 추격 거리와 공격 거리 
+    float chaseDistance = 6f;
+    float attackDistance = 1.5f;
+
+    // 공격 상태 관련 변수 
+    bool isAttacking = false;
 
 
     private void Awake()
@@ -70,43 +76,45 @@ public class Boss : MonoBehaviour
 
 
     // 상태 변경
-    public void ChangeState(State newState)
+    void ChangeState(State newState)
     {
         currentState = newState;
     }
 
-    // 코루틴 정지 
-    public void StopState(State currentState) {
-        StopCoroutine(currentState.ToString());
-    }
-
     IEnumerator Idle()
     {
-        yield return new WaitForSeconds(0.1f);
-        Debug.Log("정지");
         move = 0;
-        animator.SetBool("isAttack", false);
         animator.SetBool("isMove", false);
+        yield return null;
     }
     // 공격
     IEnumerator Attack()
     {
-        if(currentState != State.Attack) yield break;
+        // // 공격 딜레이를 줌 : curtime이 0보다 작을때 z키를 누르면 공격이되고, curTime은 coolTime으로 초기화 
+        // if (curTime <= 0)
+        // {
+        //     Debug.Log("공격 내부 타니?");
+        //     animator.SetBool("isAttack", true);
+        //     // 공격 
+        //     curTime = coolTime;
+        // }
+        // else
+        // {
+        //     curTime -= Time.deltaTime;
+        // }
 
-        Debug.Log("공격 들어오니?");
-        yield return new WaitForSeconds(0.1f);
-        Debug.Log("공격!");
-        // 공격 딜레이를 줌 : curtime이 0보다 작을때 z키를 누르면 공격이되고, curTime은 coolTime으로 초기화 
-        if (curTime <= 0)
+        if (!isAttacking)
         {
-            Debug.Log("공격 내부 타니?");
+            isAttacking = true;
             animator.SetBool("isAttack", true);
-            // 공격 
-            curTime = coolTime;
-        }
-        else
-        {
-            curTime -= Time.deltaTime;
+            // 공격 딜레이 후 공격 실행 
+            yield return new WaitForSeconds(coolTime);
+            Debug.Log("플레이어에게 20의 데미지를 입힘!!");
+
+            animator.SetBool("isAttack", false);    // isAttack 애니메이션을 끝냄
+            isAttacking = false;
+
+            ChangeState(State.Chase); // 공격 후 추격 상태로 변경 
         }
     }
 
@@ -138,11 +146,8 @@ public class Boss : MonoBehaviour
 
             do
             {
-                if(currentState != State.Chase) yield break;
 
                 yield return new WaitForSeconds(0.5f);
-
-                animator.SetBool("isAttack", false);
 
                 // Player와의 방향 벡터 : 플레이어의 위치 파악 용도  
                 vec = player.transform.position - transform.position;
@@ -162,15 +167,29 @@ public class Boss : MonoBehaviour
                     move = -1f;
                     animator.SetBool("isMove", true);
                 }
+
+                if (vec.magnitude <= attackDistance)
+                {
+                    ChangeState(State.Attack);
+                    yield break;
+                }
             }
 
             // 거리가 6이내인 동안 따라 다니기 
-            while (vec.magnitude < 6f);
+            while (vec.magnitude < chaseDistance);
 
 
             // Player가 멀어질 경우 State를 Idle로 변경
             ChangeState(State.Idle);
         }
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        // 충돌한 객체가 player가 아니면 return
+        if (collider.gameObject.name != "Player") return;
+        if (currentState != State.Chase) ChangeState(State.Chase);
     }
 
 }

@@ -1763,7 +1763,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500457795}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9845,6 +9845,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff196af0c53c4c279731d4d6811a8e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorialDialogue:
+  - "\uC548\uB155\uD558\uC138\uC694! PixelSword\uC5D0 \uC624\uC2E0\uAC78 \uD658\uC601\uD569\uB2C8\uB2E4."
+  - "\uC870\uC791\uBC95\uC744 \uC54C\uB824\uB4DC\uB9AC\uACA0\uC2B5\uB2C8\uB2E4."
+  - "\uC774\uB3D9: WASD or \uBC29\uD5A5\uD0A4, \uACF5\uACA9 : Z, \uC810\uD504: SpaceBar,
+    \uC810\uD504\uB294 \uC774\uB2E8\uC810\uD504\uAC00 \uAC00\uB2A5\uD569\uB2C8\uB2E4."
+  - "\uADF8\uB7FC, \uD589\uC6B4\uC744 \uBE55\uB2C8\uB2E4!"
 --- !u!1 &1737838399
 GameObject:
   m_ObjectHideFlags: 0
@@ -11027,7 +11033,7 @@ GameObject:
   - component: {fileID: 1796613372}
   - component: {fileID: 1796613373}
   m_Layer: 7
-  m_Name: DetectSensor
+  m_Name: Sensor
   m_TagString: DetectRange
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12762,86 +12768,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!1 &1879967478
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1879967479}
-  - component: {fileID: 1879967480}
-  - component: {fileID: 1879967481}
-  m_Layer: 7
-  m_Name: AttackSensor
-  m_TagString: AttackRange
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1879967479
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879967478}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2020877417}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!58 &1879967480
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879967478}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
---- !u!114 &1879967481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1879967478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1075b87bedb0e41419dfd5be30fbab61, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1885847482
 GameObject:
   m_ObjectHideFlags: 0
@@ -13332,7 +13258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!95 &2020877415
 Animator:
   serializedVersion: 5
@@ -13420,7 +13346,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1796613371}
-  - {fileID: 1879967479}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2020877418
@@ -13508,7 +13433,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 245139363}
-  currentState: 0
   coolTime: 0.5
 --- !u!1001 &2042023668
 PrefabInstance:
@@ -13820,8 +13744,8 @@ GameObject:
   - component: {fileID: 2073146751}
   - component: {fileID: 2073146753}
   - component: {fileID: 2073146752}
-  - component: {fileID: 2073146755}
   - component: {fileID: 2073146754}
+  - component: {fileID: 2073146755}
   m_Layer: 5
   m_Name: Dialogue
   m_TagString: Untagged

@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SoundManager.instance.PlaySound(0);
-        StartCoroutine(TutorialDialogue());
+
+        // 튜토리얼 처음 시작시 나오는 다이얼로그 
+        // StartCoroutine(TutorialDialogue());
     }
 
     // Update is called once per frame
